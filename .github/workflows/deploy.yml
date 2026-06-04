@@ -11,8 +11,12 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4  # Updated to v4 to fix the Node.js warning
 
+      - name: Install dependencies
+        run: npm install  # This downloads express and mysql2 in the runner
+
       - name: Generate Deployment Package
-        run: zip -r deploy.zip . -x '*.git*' # This creates a zip file of everything except Git files
+        run: |
+          zip -r deploy.zip . -x "*.git*"
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v22 # Updated to v22
