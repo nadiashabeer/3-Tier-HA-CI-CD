@@ -1,0 +1,13 @@
+{
+  "name": "project5-3tier-app",
+  "version": "1.0.0",
+  "description": "3-Tier HA App",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.6.0"
+  }
+}
