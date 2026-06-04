@@ -1,0 +1,23 @@
+name: Deploy to AWS Beanstalk
+on:
+  push:
+    branches:
+      - main  # This tells GitHub: "Run this whenever I push to the main branch"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: 'Project5-App'
+          environment_name: 'Project5-App-env'
+          version_label: ${{ github.sha }}
+          region: us-east-1
+          deployment_package: .
