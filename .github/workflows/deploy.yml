@@ -2,17 +2,20 @@ name: Deploy to AWS Beanstalk
 on:
   push:
     branches:
-      - main  # This tells GitHub: "Run this whenever I push to the main branch"
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Updated to v4 to fix the Node.js warning
+
+      - name: Generate Deployment Package
+        run: zip -r deploy.zip . -x '*.git*' # This creates a zip file of everything except Git files
 
       - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v21
+        uses: einaregilsson/beanstalk-deploy@v22 # Updated to v22
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -20,4 +23,4 @@ jobs:
           environment_name: 'Project5-App-env'
           version_label: ${{ github.sha }}
           region: us-east-1
-          deployment_package: .
+          deployment_package: deploy.zip # Now pointing to the zip file we just made
