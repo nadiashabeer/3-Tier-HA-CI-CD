@@ -33,4 +33,34 @@ The infrastructure is designed for maximum fault tolerance, scalability, and sec
 * **Auto Scaling & Alarms:** Implemented CloudWatch alarms tracking CPU utilization and network traffic to dynamically scale capacity up or down based on demand.
 
 ### 3. Continuous Integration & Continuous Deployment (CI/CD)
-* **Pipeline Flow:** `GitHub` ➔ `AWS CodeBuild` ➔
+* **Pipeline Flow:** `GitHub` ➔ `AWS CodeBuild` ➔ `AWS CodeDeploy`
+* **Blue/Green Deployments:** Configured to ensure zero-downtime updates and seamless rollback capabilities if post-deployment health checks fail.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+* An active AWS Account
+* AWS CLI configured with appropriate permissions
+* GitHub repository secrets configured (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, etc.)
+
+### Deployment Steps
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/yourusername/your-repo-name.git](https://github.com/yourusername/your-repo-name.git)
+    cd your-repo-name
+    ```
+2.  **Provision Infrastructure:** Deploy the networking components (Multi-AZ VPC) and database stack (RDS Multi-AZ + Read Replica) via the AWS Console or Infrastructure as Code (IaC).
+3.  **Configure CI/CD:** Set up your GitHub Actions secrets to securely connect with AWS CodeBuild and CodeDeploy.
+4.  **Trigger Pipeline:** Push a commit to the main branch to trigger the GitHub Actions workflow and execute the initial application deployment to Elastic Beanstalk.
+
+---
+
+## 📊 Monitoring & Verification
+* **High Availability:** Simulate an AZ outage to verify Route 53, ALB routing, and RDS failover mechanics work seamlessly.
+* **Auto Scaling:** Run a stress test on the application tier to verify CloudWatch alarms trigger EC2 scale-up events.
+* **CI/CD:** Modify a piece of application code, commit to GitHub, and watch the Blue/Green deployment execute without downtime.
+
+---
+**Author: Nadia Shabeer**
